@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandeep Singh Rajput — Healthcare Operations Consultant</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #f5f5f5;
+  --border: rgba(0,0,0,0.1);
+  --ink: #111111;
+  --muted: #888888;
+  --text: #444444;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Desktop cursor only */
+@media (pointer: fine) {
+  body { cursor: none; }
+  .cursor {
+    position: fixed; top:0; left:0; width:10px; height:10px;
+    background:#111; border-radius:50%; pointer-events:none;
+    z-index:9999; transform:translate(-50%,-50%);
+    transition: width .25s, height .25s; mix-blend-mode:multiply;
+  }
+  .cursor-ring {
+    position:fixed; top:0; left:0; width:36px; height:36px;
+    border:1px solid rgba(0,0,0,.3); border-radius:50%;
+    pointer-events:none; z-index:9998; transform:translate(-50%,-50%);
+    transition: transform .18s ease-out, width .3s, height .3s;
+  }
+  body:has(a:hover) .cursor, body:has(button:hover) .cursor { width:20px; height:20px; }
+}
+@media (pointer: coarse) { .cursor, .cursor-ring { display:none; } }
+
+/* Noise overlay */
+body::before {
+  content:''; position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:1000; opacity:.25;
+}
+
+/* ── NAV ── */
+nav.main-nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding:0 60px; height:72px;
+  display:flex; align-items:center; justify-content:space-between;
+  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,.94);
+  border-bottom:1px solid rgba(0,0,0,.08);
+  transition:border-color .4s;
+}
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:500; color:#111; letter-spacing:.5px; }
+.nav-links { display:flex; gap:40px; list-style:none; }
+.nav-links a { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:#888; text-decoration:none; transition:color .3s; font-weight:600; }
+.nav-links a:hover { color:#111; }
+.nav-cta { font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:#fff; background:#111; border:1px solid #111; padding:10px 22px; text-decoration:none; transition:all .3s; }
+.nav-cta:hover { background:#fff; color:#111; }
+
+/* Hamburger button */
+.nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px; }
+.nav-hamburger span { display:block; width:24px; height:2px; background:#111; transition:all .3s; border-radius:1px; }
+.nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity:0; }
+.nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+/* Mobile menu overlay */
+.nav-mobile-menu {
+  display:none; position:fixed;
+  top:64px; left:0; right:0;
+  background:#fff; border-bottom:1px solid rgba(0,0,0,.08);
+  z-index:99; padding:24px 24px 32px;
+  flex-direction:column;
+  box-shadow: 0 8px 32px rgba(0,0,0,.06);
+}
+.nav-mobile-menu.open { display:flex; }
+.nav-mobile-menu a {
+  font-size:13px; letter-spacing:2px; text-transform:uppercase;
+  color:#888; text-decoration:none; font-weight:600;
+  padding:16px 0; border-bottom:1px solid rgba(0,0,0,.06); transition:color .3s;
+}
+.nav-mobile-menu a:hover { color:#111; }
+.nav-mobile-menu .mob-cta {
+  margin-top:20px; background:#111; color:#fff !important;
+  text-align:center; border:none; padding:14px 0;
+}
+
+/* ── HERO ── */
+#hero {
+  min-height:100vh; display:grid;
+  grid-template-columns:1fr 420px;
+  padding-top:72px; position:relative; overflow:hidden;
+}
+.hero-bg-lines {
+  position:absolute; inset:0;
+  background-image: linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px), linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 80% 80% at 30% 50%,black 0%,transparent 70%);
+}
+.hero-left {
+  padding:80px 60px 80px 80px;
+  display:flex; flex-direction:column; justify-content:center; position:relative;
+}
+.hero-eyebrow {
+  font-size:10px; letter-spacing:4px; text-transform:uppercase; color:#888; font-weight:700;
+  margin-bottom:28px; display:flex; align-items:center; gap:14px;
+  opacity:0; animation:fadeUp .8s .2s forwards;
+}
+.hero-eyebrow::before { content:''; width:40px; height:1px; background:#111; }
+.hero-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(44px,7vw,88px); font-weight:300; color:#111;
+  line-height:.95; letter-spacing:-1px; margin-bottom:8px;
+  opacity:0; animation:fadeUp .9s .35s forwards;
+}
+.hero-name em { font-style:italic; }
+.hero-surname {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(44px,7vw,88px); font-weight:600; color:#111;
+  line-height:.95; letter-spacing:-1px; margin-bottom:36px;
+  opacity:0; animation:fadeUp .9s .45s forwards;
+}
+.hero-desc { font-size:15px; line-height:1.75; color:#555; max-width:520px; margin-bottom:52px; opacity:0; animation:fadeUp .9s .6s forwards; }
+.hero-actions { display:flex; gap:20px; align-items:center; flex-wrap:wrap; opacity:0; animation:fadeUp .9s .75s forwards; }
+
+.btn-primary { display:inline-flex; align-items:center; gap:10px; background:#111; color:#fff; font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; padding:16px 36px; text-decoration:none; transition:all .3s; position:relative; overflow:hidden; }
+.btn-primary::after { content:''; position:absolute; inset:0; background:#fff; opacity:0; transition:opacity .3s; }
+.btn-primary:hover { background:#333; }
+.btn-primary:hover::after { opacity:.08; }
+.btn-secondary { display:inline-flex; align-items:center; gap:10px; color:#888; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:16px 0; border-bottom:1px solid transparent; transition:all .3s; }
+.btn-secondary:hover { color:#111; border-color:#111; }
+
+.hero-stats { display:flex; margin-top:72px; border-top:1px solid rgba(0,0,0,.1); padding-top:40px; opacity:0; animation:fadeUp .9s .9s forwards; flex-wrap:wrap; gap:0; }
+.stat { flex:1; min-width:90px; padding-right:40px; border-right:1px solid rgba(0,0,0,.1); margin-right:40px; }
+.stat:last-child { border-right:none; margin-right:0; padding-right:0; }
+.stat-number { font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:600; color:#111; line-height:1; margin-bottom:6px; }
+.stat-number span { font-size:28px; }
+.stat-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#888; font-weight:600; }
+
+.hero-right { background:#f5f5f5; border-left:1px solid rgba(0,0,0,.08); display:flex; flex-direction:column; justify-content:center; padding:60px 50px; position:relative; opacity:0; animation:fadeIn 1.2s .5s forwards; }
+.hero-right::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:#111; }
+.availability-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(0,0,0,.05); border:1px solid rgba(0,0,0,.12); padding:8px 16px; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#111; font-weight:700; margin-bottom:40px; width:fit-content; }
+.availability-badge::before { content:''; width:7px; height:7px; background:#4caf50; border-radius:50%; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+.card-title { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:500; color:#111; line-height:1.3; margin-bottom:30px; }
+.expertise-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:40px; }
+.tag { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:6px 13px; border:1px solid rgba(0,0,0,.15); color:#888; background:transparent; transition:all .3s; }
+.tag:hover, .tag.active { border-color:#111; color:#111; background:rgba(0,0,0,.06); }
+.quick-links { display:flex; flex-direction:column; border-top:1px solid rgba(0,0,0,.08); padding-top:30px; }
+.quick-link { display:flex; align-items:center; justify-content:space-between; padding:16px 0; border-bottom:1px solid rgba(0,0,0,.08); text-decoration:none; transition:all .3s; }
+.quick-link:hover .ql-title { color:#111; }
+.quick-link:hover .ql-arrow { transform:translate(4px,-4px); }
+.ql-title { font-size:13px; font-weight:600; color:#333; letter-spacing:.3px; transition:color .3s; }
+.ql-meta { font-size:10px; color:#999; margin-top:2px; letter-spacing:.5px; }
+.ql-arrow { color:#111; font-size:18px; transition:transform .3s; }
+
+/* ── SECTIONS ── */
+section { padding:120px 80px; }
+section+section { border-top:1px solid var(--border); }
+.section-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:80px; gap:40px; }
+.section-label { font-size:10px; letter-spacing:4px; text-transform:uppercase; color:#888; font-weight:700; display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.section-label::before { content:''; width:30px; height:1px; background:#111; }
+.section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(34px,5vw,64px); font-weight:400; color:#111; line-height:1.05; letter-spacing:-.5px; }
+.section-title em { font-style:italic; }
+.section-subtitle { font-size:15px; line-height:1.7; color:#666; max-width:440px; text-align:right; padding-top:8px; }
+
+/* About */
+#about { background:#f7f7f7; }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.about-text { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:300; line-height:1.6; color:#111; margin-bottom:32px; }
+.about-body { font-size:14.5px; line-height:1.8; color:#555; margin-bottom:44px; }
+.credentials { display:flex; flex-direction:column; }
+.credential { display:flex; align-items:center; gap:20px; padding:20px 0; border-bottom:1px solid rgba(0,0,0,.08); }
+.credential:first-child { border-top:1px solid rgba(0,0,0,.08); }
+.cred-icon { width:42px; height:42px; background:rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.1); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:18px; }
+.cred-text { font-size:13px; font-weight:600; color:#111; }
+.cred-sub { font-size:11px; color:#888; margin-top:2px; }
+.about-right { display:flex; flex-direction:column; gap:24px; }
+.metric-card { background:#fff; border:1px solid rgba(0,0,0,.08); padding:32px; position:relative; overflow:hidden; transition:border-color .3s,box-shadow .3s; }
+.metric-card:hover { border-color:rgba(0,0,0,.2); box-shadow:0 4px 24px rgba(0,0,0,.06); }
+.metric-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:2px; background:#111; opacity:0; transition:opacity .3s; }
+.metric-card:hover::before { opacity:1; }
+.metric-value { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:600; color:#111; line-height:1; margin-bottom:8px; }
+.metric-value span { font-size:30px; }
+.metric-label { font-size:12px; font-weight:600; color:#888; letter-spacing:1.5px; text-transform:uppercase; }
+.metric-desc { font-size:13px; color:#666; margin-top:10px; line-height:1.5; }
+
+/* Expertise */
+#expertise { background:#fff; }
+.expertise-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+.expertise-card { background:#f7f7f7; padding:44px 36px; position:relative; overflow:hidden; transition:all .4s; cursor:default; }
+.expertise-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:#111; transform:scaleX(0); transform-origin:left; transition:transform .4s cubic-bezier(.25,1,.5,1); }
+.expertise-card:hover::after { transform:scaleX(1); }
+.expertise-card:hover { background:#efefef; }
+.exp-number { font-family:'Cormorant Garamond',serif; font-size:64px; font-weight:300; color:rgba(0,0,0,.06); line-height:1; position:absolute; top:24px; right:28px; }
+.exp-icon { font-size:28px; margin-bottom:20px; display:block; }
+.exp-title { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:#111; margin-bottom:14px; line-height:1.2; }
+.exp-desc { font-size:13px; line-height:1.65; color:#555; }
+
+/* Timeline */
+#experience { background:#f7f7f7; }
+.timeline { position:relative; padding-left:40px; }
+.timeline::before { content:''; position:absolute; top:8px; left:0; width:1px; height:calc(100% - 8px); background:linear-gradient(to bottom,#111,transparent); }
+.timeline-item { position:relative; padding-bottom:60px; padding-left:50px; opacity:0; transform:translateX(-20px); transition:all .6s cubic-bezier(.25,1,.5,1); }
+.timeline-item.visible { opacity:1; transform:translateX(0); }
+.timeline-item:last-child { padding-bottom:0; }
+.timeline-dot { position:absolute; left:-46px; top:6px; width:13px; height:13px; background:#fff; border:2px solid #111; border-radius:50%; transition:background .3s; }
+.timeline-item:hover .timeline-dot { background:#111; }
+.tl-date { font-family:'DM Mono',monospace; font-size:10.5px; color:#888; letter-spacing:1.5px; margin-bottom:10px; }
+.tl-header { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:6px; flex-wrap:wrap; }
+.tl-role { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:600; color:#111; line-height:1.15; }
+.tl-org { font-size:12px; font-weight:600; color:#888; margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+.tl-org::before { content:''; width:14px; height:1.5px; background:#111; }
+.tl-points { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.tl-points li { font-size:13.5px; line-height:1.6; color:#555; padding-left:18px; position:relative; }
+.tl-points li::before { content:'—'; position:absolute; left:0; color:#111; font-size:11px; top:2px; }
+
+/* Achievements */
+#achievements { background:#fff; }
+.ach-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.ach-card { background:#f7f7f7; border:1px solid rgba(0,0,0,.08); padding:36px; display:flex; gap:24px; align-items:flex-start; transition:all .3s; opacity:0; transform:translateY(20px); }
+.ach-card.visible { opacity:1; transform:translateY(0); }
+.ach-card:hover { border-color:rgba(0,0,0,.2); background:#efefef; box-shadow:0 4px 20px rgba(0,0,0,.05); }
+.ach-icon-wrap { width:52px; height:52px; background:rgba(0,0,0,.05); border:1px solid rgba(0,0,0,.1); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:22px; }
+.ach-title { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:#111; margin-bottom:8px; line-height:1.2; }
+.ach-desc { font-size:13px; line-height:1.6; color:#555; }
+
+/* Contact */
+#contact { background:#f7f7f7; padding:120px 80px; }
+.contact-inner { max-width:900px; margin:0 auto; text-align:center; }
+.contact-super { font-size:10px; letter-spacing:4px; text-transform:uppercase; color:#888; font-weight:700; margin-bottom:24px; }
+.contact-headline { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,6vw,76px); font-weight:300; color:#111; line-height:1.05; letter-spacing:-1px; margin-bottom:28px; }
+.contact-headline em { font-style:italic; }
+.contact-sub { font-size:15px; line-height:1.7; color:#666; max-width:500px; margin:0 auto 52px; }
+.contact-cards { display:flex; gap:16px; justify-content:center; margin-bottom:52px; flex-wrap:wrap; }
+.contact-card { display:flex; flex-direction:column; align-items:center; gap:10px; background:#fff; border:1px solid rgba(0,0,0,.1); padding:28px 24px; text-decoration:none; transition:all .3s; min-width:150px; flex:1; max-width:200px; }
+.contact-card:hover { border-color:#111; box-shadow:0 4px 20px rgba(0,0,0,.08); }
+.cc-icon { font-size:24px; }
+.cc-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#888; font-weight:700; }
+.cc-value { font-size:12px; color:#111; font-weight:500; word-break:break-all; text-align:center; }
+.contact-cta { display:inline-flex; align-items:center; gap:12px; background:#111; color:#fff; font-size:12px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; padding:18px 48px; text-decoration:none; transition:all .3s; position:relative; overflow:hidden; }
+.contact-cta::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent); transform:translateX(-100%); transition:transform .6s; }
+.contact-cta:hover { background:#333; }
+.contact-cta:hover::before { transform:translateX(100%); }
+
+/* Footer */
+footer { background:#fff; border-top:1px solid rgba(0,0,0,.08); padding:32px 80px; display:flex; align-items:center; justify-content:space-between; }
+.footer-name { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:500; color:#888; }
+.footer-copy { font-size:11px; color:#aaa; letter-spacing:1px; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .7s cubic-bezier(.25,1,.5,1), transform .7s cubic-bezier(.25,1,.5,1); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ════════════════════════════════
+   RESPONSIVE — Tablet ≤ 1024px
+════════════════════════════════ */
+@media (max-width:1024px) {
+  nav.main-nav { padding:0 32px; }
+  .nav-links { gap:24px; }
+  #hero { grid-template-columns:1fr 340px; }
+  .hero-left { padding:60px 40px 60px 40px; }
+  section { padding:100px 48px; }
+  #contact { padding:100px 48px; }
+}
+
+/* ════════════════════════════════
+   RESPONSIVE — Mobile ≤ 768px
+════════════════════════════════ */
+@media (max-width:768px) {
+  /* Nav */
+  nav.main-nav { padding:0 20px; height:64px; }
+  .nav-links { display:none; }
+  .nav-cta { display:none; }
+  .nav-hamburger { display:flex; }
+
+  /* Hero */
+  #hero { grid-template-columns:1fr; min-height:auto; }
+  .hero-left { padding:40px 20px 52px; }
+  .hero-right { display:none; }
+
+  .hero-stats { margin-top:48px; padding-top:28px; }
+  .stat { padding-right:20px; margin-right:20px; }
+  .stat-number { font-size:36px; }
+  .stat-number span { font-size:20px; }
+
+  .hero-actions { gap:12px; }
+  .btn-primary { padding:14px 28px; }
+
+  /* Sections */
+  section { padding:72px 20px; }
+  #contact { padding:72px 20px; }
+  .section-header { flex-direction:column; gap:12px; margin-bottom:48px; }
+  .section-subtitle { text-align:left; max-width:100%; }
+
+  /* About */
+  .about-grid { grid-template-columns:1fr; gap:48px; }
+  .about-text { font-size:20px; }
+
+  /* Expertise */
+  .expertise-grid { grid-template-columns:1fr; }
+  .expertise-card { padding:32px 24px; }
+
+  /* Timeline */
+  .timeline { padding-left:24px; }
+  .timeline-item { padding-left:30px; padding-bottom:48px; }
+  .timeline-dot { left:-30px; }
+  .tl-role { font-size:20px; }
+
+  /* Achievements */
+  .ach-grid { grid-template-columns:1fr; }
+  .ach-card { padding:24px 20px; gap:16px; }
+
+  /* Contact */
+  .contact-cards { gap:12px; }
+  .contact-card { min-width:calc(50% - 6px); max-width:100%; padding:20px 16px; }
+  .contact-cta { padding:16px 28px; font-size:11px; letter-spacing:2px; }
+
+  /* Footer */
+  footer { padding:24px 20px; flex-direction:column; gap:8px; text-align:center; }
+}
+
+/* ════════════════════════════════
+   RESPONSIVE — Small ≤ 420px
+════════════════════════════════ */
+@media (max-width:420px) {
+  .hero-name, .hero-surname { font-size:38px; }
+  .hero-desc { font-size:14px; }
+  .contact-card { min-width:100%; max-width:100%; }
+  .stat { min-width:80px; padding-right:16px; margin-right:16px; }
+  .stat-number { font-size:30px; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav class="main-nav">
+  <div class="nav-logo">S<span>.</span>Rajput</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:officallsandeepsingh06@gmail.com" class="nav-cta">Hire Me</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="#about" class="mnl">About</a>
+  <a href="#expertise" class="mnl">Expertise</a>
+  <a href="#experience" class="mnl">Experience</a>
+  <a href="#achievements" class="mnl">Achievements</a>
+  <a href="#contact" class="mnl">Contact</a>
+  <a href="mailto:officallsandeepsingh06@gmail.com" class="mnl mob-cta">Hire Me</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Healthcare Operations Consultant</div>
+    <div class="hero-name"><em>Sandeep</em></div>
+    <div class="hero-surname">Singh Rajput</div>
+    <p class="hero-desc">
+      Transforming hospital operations and patient experiences across India's healthcare landscape. Specialist in OPD workflow optimization, revenue growth strategy, and NABH compliance systems.
+    </p>
+    <div class="hero-actions">
+      <a href="#experience" class="btn-primary">View My Work ↓</a>
+      <a href="#contact" class="btn-secondary">Get In Touch →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">2<span>+</span></div>
+        <div class="stat-label">Years in Healthcare</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">2<span>×</span></div>
+        <div class="stat-label">Employee of Month</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">3<span>+</span></div>
+        <div class="stat-label">Hospitals Served</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="availability-badge">Available for Consulting</div>
+    <div class="card-title">Driving measurable outcomes in healthcare operations</div>
+    <div class="expertise-tags">
+      <span class="tag active">OPD Operations</span>
+      <span class="tag active">NABH Compliance</span>
+      <span class="tag">Revenue Strategy</span>
+      <span class="tag">Patient Experience</span>
+      <span class="tag">SOP Development</span>
+      <span class="tag">Team Leadership</span>
+    </div>
+    <div class="quick-links">
+      <a href="#experience" class="quick-link">
+        <div><div class="ql-title">Asst. Operations Manager</div><div class="ql-meta">SBH Group of Hospital · 2026–Present</div></div>
+        <div class="ql-arrow">↗</div>
+      </a>
+      <a href="#experience" class="quick-link">
+        <div><div class="ql-title">Operations & Guest Relations</div><div class="ql-meta">Pahlajanis Women's Hospital · 2024–2026</div></div>
+        <div class="ql-arrow">↗</div>
+      </a>
+      <a href="#achievements" class="quick-link">
+        <div><div class="ql-title">NABH Coordinator</div><div class="ql-meta">Multi-department compliance lead</div></div>
+        <div class="ql-arrow">↗</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Who I Am</div>
+      <h2 class="section-title">A systems thinker<br>in <em>healthcare</em></h2>
+    </div>
+    <p class="section-subtitle">Blending operational discipline with patient-first philosophy to build healthcare systems that perform.</p>
+  </div>
+  <div class="about-grid">
+    <div class="reveal">
+      <p class="about-text">"The best healthcare operations are invisible to the patient — they just feel cared for."</p>
+      <p class="about-body">With a foundation in Computer Science Engineering and an MBA in Healthcare Operations, I bring a rare hybrid of analytical rigor and human-centered thinking to hospital management. I've led cross-functional initiatives across OPD, MRD, nursing, and quality departments — always with the goal of making healthcare delivery smoother, faster, and more effective.</p>
+      <div class="credentials">
+        <div class="credential">
+          <div class="cred-icon">🎓</div>
+          <div><div class="cred-text">Master of Business Administration</div><div class="cred-sub">Healthcare / Operations Management</div></div>
+        </div>
+        <div class="credential">
+          <div class="cred-icon">💻</div>
+          <div><div class="cred-text">B.Tech — Computer Science Engineering</div><div class="cred-sub">2017 – 2021</div></div>
+        </div>
+        <div class="credential">
+          <div class="cred-icon">🏅</div>
+          <div><div class="cred-text">UPSC CDS Cleared (2×) · AFCAT Cleared (1×)</div><div class="cred-sub">National-level competitive examinations</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="metric-card reveal" style="transition-delay:.1s">
+        <div class="metric-value">2<span>+</span></div>
+        <div class="metric-label">Years Experience</div>
+        <div class="metric-desc">Hands-on hospital operations across OPD, revenue strategy, and patient care coordination.</div>
+      </div>
+      <div class="metric-card reveal" style="transition-delay:.2s">
+        <div class="metric-value">4<span>+</span></div>
+        <div class="metric-label">Departments Coordinated</div>
+        <div class="metric-desc">Nursing, MRD, Front Desk, Quality — serving as NABH compliance coordinator across all units.</div>
+      </div>
+      <div class="metric-card reveal" style="transition-delay:.3s">
+        <div class="metric-value">∞</div>
+        <div class="metric-label">Patient-First Approach</div>
+        <div class="metric-desc">Every process, every SOP, every campaign designed around one goal: exceptional patient experience.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">What I Do</div>
+      <h2 class="section-title">Areas of<br><em>Expertise</em></h2>
+    </div>
+    <p class="section-subtitle">A focused set of capabilities built through direct hospital experience and continuous learning.</p>
+  </div>
+  <div class="expertise-grid">
+    <div class="expertise-card reveal">
+      <span class="exp-number">01</span><span class="exp-icon">🏥</span>
+      <div class="exp-title">Hospital Operations Management</div>
+      <p class="exp-desc">End-to-end oversight of hospital workflows, OPD management, and cross-department coordination for seamless daily operations.</p>
+    </div>
+    <div class="expertise-card reveal" style="transition-delay:.1s">
+      <span class="exp-number">02</span><span class="exp-icon">📈</span>
+      <div class="exp-title">Revenue Growth & Conversion</div>
+      <p class="exp-desc">Patient conversion strategy, in-house campaigns, cross-selling services, and departmental revenue optimization frameworks.</p>
+    </div>
+    <div class="expertise-card reveal" style="transition-delay:.2s">
+      <span class="exp-number">03</span><span class="exp-icon">📋</span>
+      <div class="exp-title">SOP Development & Compliance</div>
+      <p class="exp-desc">Designing and implementing SOPs that improve operational efficiency, regulatory compliance, and NABH audit readiness.</p>
+    </div>
+    <div class="expertise-card reveal" style="transition-delay:.3s">
+      <span class="exp-number">04</span><span class="exp-icon">💬</span>
+      <div class="exp-title">Patient Experience Design</div>
+      <p class="exp-desc">Transforming patient journeys through personalized care protocols, complaint resolution systems, and satisfaction metrics.</p>
+    </div>
+    <div class="expertise-card reveal" style="transition-delay:.4s">
+      <span class="exp-number">05</span><span class="exp-icon">📣</span>
+      <div class="exp-title">Healthcare Marketing</div>
+      <p class="exp-desc">Digital marketing coordination, brand visibility campaigns, community engagement, and hospital events management.</p>
+    </div>
+    <div class="expertise-card reveal" style="transition-delay:.5s">
+      <span class="exp-number">06</span><span class="exp-icon">👥</span>
+      <div class="exp-title">Team Leadership & Coordination</div>
+      <p class="exp-desc">Leading multi-disciplinary teams across clinical and administrative functions with clear communication and accountability.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Career Journey</div>
+      <h2 class="section-title">Professional<br><em>Experience</em></h2>
+    </div>
+    <p class="section-subtitle">A track record of delivering operational excellence across healthcare and business environments.</p>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="tl-date">Jan 2026 — Present</div>
+      <div class="tl-header"><div class="tl-role">Assistant Operations Manager</div></div>
+      <div class="tl-org">SBH Group of Hospital, Raipur</div>
+      <ul class="tl-points">
+        <li>Managing end-to-end hospital operations and OPD workflows</li>
+        <li>Driving patient conversion strategies and increasing departmental revenue</li>
+        <li>Leading counseling initiatives, cross-selling services, and in-house campaigns</li>
+        <li>Developing SOPs to improve operational efficiency and compliance</li>
+        <li>Coordinating digital marketing and branding activities</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="tl-date">May 2024 — Jan 2026</div>
+      <div class="tl-header"><div class="tl-role">Operations & Guest Relations Executive</div></div>
+      <div class="tl-org">Pahlajanis Women's Hospital</div>
+      <ul class="tl-points">
+        <li>Oversaw daily hospital operations and patient flow management</li>
+        <li>Improved OPD efficiency and personalized patient care services</li>
+        <li>Coordinated with clinical teams for seamless service delivery</li>
+        <li>Organized hospital events and community engagement programs</li>
+        <li>Executed marketing strategies to enhance brand visibility</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="tl-date">Jul 2023 — Dec 2023</div>
+      <div class="tl-header"><div class="tl-role">Business Development Executive</div></div>
+      <div class="tl-org">Confidence Petroleum Pvt. Ltd.</div>
+      <ul class="tl-points">
+        <li>Managed client relationships and business growth initiatives</li>
+        <li>Supported sales and operational expansion strategies</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="tl-date">Jun 2022 — Feb 2023</div>
+      <div class="tl-header"><div class="tl-role">Senior Marketing Executive</div></div>
+      <div class="tl-org">SAG InfoTech Pvt. Ltd., Jaipur</div>
+      <ul class="tl-points">
+        <li>Generated leads and managed client acquisition pipelines</li>
+        <li>Contributed to revenue growth through effective sales execution</li>
+        <li>Maintained client relationships and supported business development</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Recognition</div>
+      <h2 class="section-title">Key<br><em>Achievements</em></h2>
+    </div>
+    <p class="section-subtitle">Milestones that reflect commitment, capability, and consistent performance under pressure.</p>
+  </div>
+  <div class="ach-grid">
+    <div class="ach-card">
+      <div class="ach-icon-wrap">🏅</div>
+      <div>
+        <div class="ach-title">Employee of the Month — 2×</div>
+        <div class="ach-desc">Awarded twice in 2026 at SBH Group of Hospital for exceptional operational performance and leadership.</div>
+      </div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon-wrap">🏥</div>
+      <div>
+        <div class="ach-title">NABH Compliance Coordinator</div>
+        <div class="ach-desc">Led documentation and audit readiness across Nursing, MRD, Front Desk, and Quality departments.</div>
+      </div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon-wrap">⚔️</div>
+      <div>
+        <div class="ach-title">UPSC CDS Cleared — 2 Times</div>
+        <div class="ach-desc">Successfully cleared one of India's most competitive defence service examinations twice, demonstrating exceptional discipline.</div>
+      </div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon-wrap">✈️</div>
+      <div>
+        <div class="ach-title">AFCAT Cleared</div>
+        <div class="ach-desc">Air Force Common Admission Test cleared — reflecting high cognitive aptitude and national competitive performance.</div>
+      </div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon-wrap">📝</div>
+      <div>
+        <div class="ach-title">Patient Complaint Resolution System</div>
+        <div class="ach-desc">Established and maintained Patient Complaint Register ensuring timely resolution and improved satisfaction scores.</div>
+      </div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon-wrap">🤝</div>
+      <div>
+        <div class="ach-title">Women's Healthcare Specialist</div>
+        <div class="ach-desc">Deep expertise in women's healthcare operations, counseling, and patient journey design built at Pahlajanis Women's Hospital.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-super reveal">Let's Work Together</div>
+    <h2 class="contact-headline reveal">Ready to <em>transform</em><br>your operations?</h2>
+    <p class="contact-sub reveal">Whether you need a healthcare operations consultant, a team leader, or a strategic partner — let's have a conversation.</p>
+    <div class="contact-cards reveal">
+      <a href="tel:+919340001272" class="contact-card">
+        <span class="cc-icon">📞</span><span class="cc-label">Phone</span><span class="cc-value">+91 93400 01272</span>
+      </a>
+      <a href="mailto:officallsandeepsingh06@gmail.com" class="contact-card">
+        <span class="cc-icon">✉️</span><span class="cc-label">Email</span><span class="cc-value">officallsandeepsingh06@gmail.com</span>
+      </a>
+      <a href="https://linkedin.com/in/sandeep-singh-rajput-90069a183" target="_blank" rel="noopener" class="contact-card">
+        <span class="cc-icon">🔗</span><span class="cc-label">LinkedIn</span><span class="cc-value">View Profile</span>
+      </a>
+      <a href="https://maps.google.com/?q=Raipur+Chhattisgarh" target="_blank" rel="noopener" class="contact-card">
+        <span class="cc-icon">📍</span><span class="cc-label">Location</span><span class="cc-value">Raipur, Chhattisgarh</span>
+      </a>
+    </div>
+    <a href="mailto:officallsandeepsingh06@gmail.com" class="contact-cta reveal">Send Me a Message →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Sandeep Singh Rajput</div>
+  <div class="footer-copy">© 2026 · Healthcare Operations Consultant · Raipur, India</div>
+</footer>
+
+<script>
+// Custom cursor — desktop only
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+if (cursor && window.matchMedia('(pointer: fine)').matches) {
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+  (function animateCursor() {
+    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(animateCursor);
+  })();
+}
+
+// Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+document.querySelectorAll('.mnl').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+// Close menu on outside click
+document.addEventListener('click', e => {
+  if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal, .timeline-item, .ach-card').forEach(el => observer.observe(el));
+
+// Nav border on scroll
+window.addEventListener('scroll', () => {
+  document.querySelector('nav.main-nav').style.borderBottomColor =
+    window.scrollY > 50 ? 'rgba(0,0,0,.15)' : 'rgba(0,0,0,.08)';
+}, { passive: true });
+
+// Tag hover
+document.querySelectorAll('.tag').forEach(tag => {
+  tag.addEventListener('mouseenter', () => tag.classList.add('active'));
+  tag.addEventListener('mouseleave', () => { if (!tag.dataset.locked) tag.classList.remove('active'); });
+});
+
+// Stagger delays
+document.querySelectorAll('.timeline-item').forEach((el,i) => el.style.transitionDelay=(i*.12)+'s');
+document.querySelectorAll('.ach-card').forEach((el,i) => el.style.transitionDelay=(i*.08)+'s');
+</script>
+</body>
+</html>
